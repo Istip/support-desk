@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -182,7 +183,7 @@ h3 {
 }
 
 .btn:hover {
-  transform: scale(0.98);
+  opacity: 0.85;
 }
 
 .ticket-created {
