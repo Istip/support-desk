@@ -9,6 +9,10 @@ const {
 } = require('../controllers/ticketController');
 const { protect } = require('../middlewares/authMiddleware');
 
+// Re-route nested route
+const noteRouter = require('./noteRoutes');
+router.use('/:ticketId/notes', noteRouter);
+
 router.get('/', protect, getTickets);
 router.get('/:id', protect, getTicket);
 router.delete('/:id', protect, deleteTicket);
