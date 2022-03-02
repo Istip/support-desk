@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTicket, closeTicket } from '../features/tickets/ticketSlice';
-import { getNotes, reset as notesReset } from '../features/notes/noteSlice';
-import { useParams } from 'react-router-dom';
+import { getNotes, createNote } from '../features/notes/noteSlice';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-modal';
@@ -40,13 +40,25 @@ const Ticket = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   // Functions
   const openModal = () => setShow(true);
+
   const closeModal = () => setShow(false);
+
+  // Close ticket
+  const onTicketClose = () => {
+    dispatch(closeTicket(ticketId));
+    toast.success('Ticket Closed');
+    navigate('/tickets');
+  };
 
   const onNoteSubmit = (e) => {
     e.preventDefault();
     closeModal();
+
+    dispatch(createNote({ noteText, ticketId }));
   };
 
   useEffect(() => {
@@ -134,7 +146,9 @@ const Ticket = () => {
       ))}
 
       {ticket.status !== 'closed' && (
-        <button className="btn btn-block btn-danger">Close Ticket</button>
+        <button onClick={onTicketClose} className="btn btn-block btn-danger">
+          Close Ticket
+        </button>
       )}
     </div>
   );
